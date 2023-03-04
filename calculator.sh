@@ -34,8 +34,8 @@ fi
 read -r -p "Choose the scale (decimal precision) number bc will use: " scale
 numCheck $scale
 if ! [[ $scale -ge 1 ]]; then
-    echo -e "${red}Not valid. Exiting...${nc}" >&2
-    exit 1
+	echo -e "${red}Not valid. Exiting...${nc}" >&2
+	exit 1
 fi
 echo -e "-----------------${blue}Bash Calculator${nc}-----------------"
 echo -e "|                                               |"
@@ -116,6 +116,10 @@ while :; do
 		decCheck $second
 		answer=$(echo "scale=$scale; l($first)/l($second)" | bc -l)
 		echo -e "Log base $second of $first equals $answer"
+		;;
+	11)
+		echo -e "${red}Quitting...${nc} See ya next time."
+		exit 0
 		;;
 	esac
 done
