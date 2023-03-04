@@ -21,6 +21,14 @@ decCheck() {
 	fi
 
 }
+scale() {
+	read -r -p "Choose the scale (decimal precision) number bc will use: " scale
+	numCheck $scale
+	if ! [[ $scale -ge 1 ]]; then
+		echo -e "${red}Not valid. Exiting...${nc}" >&2
+		exit 1
+	fi
+}
 echo "Checking if pi is installed..."
 if ! command -v pi &>/dev/null; then
 	echo "Please install pi using your package manager."
@@ -31,12 +39,7 @@ if ! command -v bc &>/dev/null; then
 	echo "Please install bc using your package manager."
 	exit 1
 fi
-read -r -p "Choose the scale (decimal precision) number bc will use: " scale
-numCheck $scale
-if ! [[ $scale -ge 1 ]]; then
-	echo -e "${red}Not valid. Exiting...${nc}" >&2
-	exit 1
-fi
+scale
 echo -e "-----------------${blue}Bash Calculator${nc}-----------------"
 echo -e "|                                               |"
 echo -e "|                   Controls                    |"
@@ -51,6 +54,7 @@ echo -e "|       8) Trigonometry Functions               |"
 echo -e "|       9) Print x Digits of Pi                 |"
 echo -e "|       10) x Modulo y                          |"
 echo -e "|       11) Quit                                |"
+echo -e "|       12) Change Scale                        |"
 echo -e "|                                               |"
 echo -e "|_______________________________________________|"
 while :; do
@@ -120,6 +124,9 @@ while :; do
 	11)
 		echo -e "${red}Quitting...${nc} See ya next time."
 		exit 0
+		;;
+	12)
+		scale
 		;;
 	esac
 done
