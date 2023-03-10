@@ -58,9 +58,9 @@ echo -e "|       12) Change Scale                        |"
 echo -e "|                                               |"
 echo -e "|_______________________________________________|"
 while :; do
-	read -r -p "Enter operation between 1 and 11: " operation
+	read -r -p "Enter operation between 1 and 12: " operation
 	numCheck $operation
-	if ! [[ $operation -ge 1 && $operation -le 11 ]]; then
+	if ! [[ $operation -ge 1 && $operation -le 12 ]]; then
 		echo -e "${red}Not valid. Exiting...${nc}" >&2
 		exit 1
 	fi
@@ -120,6 +120,48 @@ while :; do
 		decCheck $second
 		answer=$(echo "scale=$scale; l($first)/l($second)" | bc -l)
 		echo -e "Log base $second of $first equals $answer"
+		;;
+	8)
+		echo -e "Trigonometry Function:"
+		echo -e "1) Sine of x"
+		echo -e "2) Cosine of x"
+		echo -e "3) Arctangent of x"
+		read -r -p "Enter operation between 1 and 3: " operation
+		numCheck $operation
+		if ! [[ $operation -ge 1 && $operation -le 3 ]]; then
+			echo -e "${red}Not valid. Exiting...${nc}" >&2
+			exit 1
+		fi
+		case $operation in
+		1)
+			read -r -p "Enter number: " number
+			decCheck $number
+			answer=$(echo "scale=$scale; s($number)" | bc -l)
+			echo -e "The sine of $number equals $answer"
+			;;
+		2)
+			read -r -p "Enter number: " number
+			decCheck $number
+			answer=$(echo "scale=$scale; c($number)" | bc -l)
+			echo -e "The cosine of $number equals $answer"
+			;;
+		3)
+			read -r -p "Enter number: " number
+			decCheck $number
+			answer=$(echo "scale=$scale; a($number)" | bc -l)
+			echo -e "The arctangent of $number equals $answer"
+			;;
+		esac
+		;;
+	9)
+		read -r -p "Enter number greater than 0: " number
+		numCheck $number
+		if ! [[ $number -ge 0 ]]; then
+			echo -e "${red}Not valid. Exiting...${nc}" >&2
+			exit 1
+		fi
+		answer=$(pi $number)
+		echo -e "$answer"
 		;;
 	11)
 		echo -e "${red}Quitting...${nc} See ya next time."
