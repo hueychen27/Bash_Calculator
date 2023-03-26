@@ -4,7 +4,7 @@ blue='\033[34m'
 nc='\033[0m'
 numCheck() {
 	re='^[0-9]+$'
-	if ! [[ $1 =~ $re ]]; then
+	if ! [[ $(echo $1 | sed 's/^[ \t]*//;s/[ \t]*$//') =~ $re ]]; then
 		echo -e "${red}Not valid. Exiting...${nc}" >&2
 		exit 1
 	else
@@ -13,7 +13,7 @@ numCheck() {
 }
 decCheck() {
 	re='^[-]?[0-9]+([.][0-9]+)?$'
-	if ! [[ $1 =~ $re ]]; then
+	if ! [[ $(echo $1 | sed 's/^[ \t]*//;s/[ \t]*$//') =~ $re ]]; then
 		echo -e "${red}Not valid. Exiting...${nc}" >&2
 		exit 1
 	else
@@ -86,7 +86,7 @@ while :; do
 		decCheck $first
 		read -r -p "Enter second number: " second
 		decCheck $second
-		answer=$(echo "$scale=$scale; first*$second" | bc -l)
+		answer=$(echo "$scale=$scale; $first*$second" | bc -l)
 		echo -e "$first multiplied by $second equals $answer"
 		;;
 	4)
@@ -162,6 +162,14 @@ while :; do
 		fi
 		answer=$(pi $number)
 		echo -e "$answer"
+		;;
+	10)
+		read -r -p "Enter first number: " first
+		decCheck $first
+		read -r -p "Enter second number: " second
+		decCheck $second
+		answer=$(echo "scale=0; $first%$second" | bc)
+		echo -e "$first modulo $second equals $answer"
 		;;
 	11)
 		echo -e "${red}Quitting...${nc} See ya next time."
