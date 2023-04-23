@@ -86,7 +86,7 @@ while :; do
 		decCheck $first
 		read -r -p "Enter second number: " second
 		decCheck $second
-		answer=$(echo "$scale=$scale; $first*$second" | bc -l)
+		answer=$(echo "scale=$scale; $first*$second" | bc -l)
 		echo -e "$first multiplied by $second equals $answer"
 		;;
 	4)
